@@ -1,46 +1,66 @@
-# Getting Started with Create React App
+# React Carousel
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A carousel example using Reactjs.
 
-## Available Scripts
+This project is to showcase how to create components that can internally
+share state without the user explicitly setting up any state logic.
 
-In the project directory, you can run:
+Users can just import the components and use the components anywhere in the
+DOM tree. The components can still communicate with each other without
+rerendering any parent nodes.
 
-### `npm start`
+## Carousel Component
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The Carousel component has three parts. All three parts do not require any
+external state logic from the user. Just import them, provide the image data
+and a unique id.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Viewer
 
-### `npm test`
+The `Viewer` component shows the main image. It also has a onhover previous and
+next arrow buttons to navigate the carousel.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+It requires props of `images` (list of image urls) and a unique string id for
+this carousel.
 
-### `npm run build`
+### Slider
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The `Slider` component is a scrollable list of thumbnails.
+Selecting one of the thumbnails will change the `Viewer` component's image.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+It requires props of `thumbnails` (list of thumbnail urls) and a unique string
+`id` for this carousel. The `thumbnailWidth` and `thumbnailHeight` are also
+required to tell the Slider how to render the thumbnails.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Previous and Next
 
-### `npm run eject`
+The `Previous` and `Next` are button components that can seperately control
+both the `Viewer` and `Slider` components to change the selected image.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Use the `Previous` and/or `Next` components to wrap your UI components for
+custom button appearance.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## How It Works
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The `Viewer` component is all that's needed but you can import optional
+`Slider`, `Previous` and `Next` components to control the `Viewer` component.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+All components require a unique string `id` so that all components with the same
+`id` string can internally share state.
 
-## Learn More
+You can have multiple carousel. For example, there are two carousels with
+id "carousel-1" and "carousel-2". All the components with `id` "carousel-1" will
+only affect "carousel-1" and not "carousel-2". All components with
+`id` "carousel-2" will only affect only "carousel-2" and not "carousel-1".
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Install
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm install
+```
+
+## Run
+
+```bash
+npm start
+```
