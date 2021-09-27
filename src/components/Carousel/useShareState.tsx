@@ -5,10 +5,13 @@ const shareState: Record<string, ShareState<any>> = {};
 
 export function useShareState<T>(
   key: string,
-  initialState: T
+  initialState: T extends any ? T | (() => T) : never
 ): [T, SetState<T>] {
-  if (!(key in shareState))
-    shareState[key] = { state: initialState, ee: new EventEmitter() };
+  if (!(key in shareState)) {
+    const initState =
+      typeof initialState === 'function' ? initialState() : initialState;
+    shareState[key] = { state: initState, ee: new EventEmitter() };
+  }
 
   const [, forceUpdate] = useState<boolean>(false);
 

@@ -20,7 +20,7 @@ and a unique id.
 The `Viewer` component shows the main image. It also has a onhover previous and
 next arrow buttons to navigate the carousel.
 
-It requires props of `images` (list of image urls) and a unique string id for
+It requires props of `images` (list of image urls) and a unique string `id` for
 this carousel.
 
 ### Slider
@@ -49,9 +49,31 @@ All components require a unique string `id` so that all components with the same
 `id` string can internally share state.
 
 You can have multiple carousel. For example, there are two carousels with
-id "carousel-1" and "carousel-2". All the components with `id` "carousel-1" will
-only affect "carousel-1" and not "carousel-2". All components with
+`id` "carousel-1" and "carousel-2". All the components with `id` "carousel-1"
+will only affect "carousel-1" and not "carousel-2". All components with
 `id` "carousel-2" will only affect only "carousel-2" and not "carousel-1".
+
+## useShareState Hook
+
+These components can internally share state via a custom hook called
+`useShareState`. The hook `useShareState` setup a map of cache that is seperate
+from React.
+
+The record for each cache consist of `state` and `ee` (event emitter).
+All `useStateState` hooks subscribe to the unique id string for the specific
+cache record. Anytime an instance of `useStateState` updates a value, it will
+emit a signal to all other `useStateState` instances that share the same `id`.
+
+This means that components in any level of the DOM tree can bypass parent state
+hoisting and direclty communicate with each other via `useShareState`.
+
+The interface for `useShareState` is the same as `react`'s `useState`.
+You provide either a intial state or a function that returns an intial state.
+It returns a tuple of `state` and `setState`. The `setState` interface is also
+the same, where you can directly pass in a new `state` or a `function`.
+
+This is similar with `redux` and `recoil` but without the need for encapsulating
+the root application with a `Provider` from Redux or `RecoilRoot` from `recoil`.
 
 ## Install
 
