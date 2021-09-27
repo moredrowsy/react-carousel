@@ -1,12 +1,31 @@
-import React, { CSSProperties, useMemo } from 'react';
-import { useShareState } from './useShareState';
+import React, { CSSProperties, useCallback, useEffect, useMemo } from 'react';
+import { useShareState } from './hooks/shareState';
 
+import { AutoSlide } from './types';
 import Arrow from './Arrow';
 import Next from './Next';
 import Previous from './Previous';
 
-const Viewer: React.FC<Props> = ({ id, images, showButtons = true }) => {
-  const [selectedIdx] = useShareState<number>(`selIdx/${id}`, 0);
+const initAutoSlide: AutoSlide = {
+  active: false,
+  timerId: null,
+  interval: 3000,
+};
+
+const Viewer: React.FC<Props> = ({
+  id,
+  images,
+  slideshow = false,
+  showButtons = true,
+}) => {
+  const [selectedIdx, setSelectedIdx] = useShareState<number>(
+    `carousel/selIdx/${id}`,
+    0
+  );
+  const [autoSlide, setAutoSlide] = useShareState<AutoSlide>(
+    `carousel/autoSlide/${id}`,
+    { ...initAutoSlide, active: slideshow }
+  );
   const btnHeight = 50;
 
   // Set negative margin to center button more closely at 50% height
@@ -16,6 +35,37 @@ const Viewer: React.FC<Props> = ({ id, images, showButtons = true }) => {
     }),
     [btnHeight]
   );
+
+  // Select next index; used in automatic slideshow
+  const nextSlide = useCallback(
+    () => setSelectedIdx((p) => (p + 1 >= images.length ? 0 : p + 1)),
+    [setSelectedIdx, images.length]
+  );
+
+  // Set automatic slideshow
+  useEffect(() => {
+    if (autoSlide.active) {
+      // Clear old setInterval
+      if (autoSlide.timerId !== null) clearInterval(autoSlide.timerId);
+
+      const timerId = setInterval(() => {
+        nextSlide();
+      }, 3000);
+      setAutoSlide((p) => ({ ...p, timerId }));
+    }
+
+    if (!autoSlide.active && autoSlide.timerId !== null) {
+      clearInterval(autoSlide.timerId);
+      setAutoSlide((p) => ({ ...p, timerId: null }));
+    }
+
+    return () => {
+      if (autoSlide.timerId !== null) {
+        clearInterval(autoSlide.timerId);
+        setAutoSlide((p) => ({ ...p, timerId: null }));
+      }
+    };
+  }, [autoSlide, setAutoSlide, nextSlide]);
 
   if (!images || images.length === 0) return null;
 
@@ -87,5 +137,6 @@ const styles: Record<string, CSSProperties> = {
 type Props = {
   id: string;
   images: string[];
+  slideshow?: boolean;
   showButtons?: boolean;
 };

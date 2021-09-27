@@ -1,5 +1,5 @@
 import React, { CSSProperties, useEffect, useMemo, useRef } from 'react';
-import { useShareState } from './useShareState';
+import { useShareState } from './hooks/shareState';
 
 const Slider: React.FC<Props> = ({
   id,
@@ -8,7 +8,7 @@ const Slider: React.FC<Props> = ({
   thumbnailHeight,
 }) => {
   const [selectedIdx, setSelectedIdx] = useShareState<number>(
-    `selIdx/${id}`,
+    `carousel/selIdx/${id}`,
     0
   );
   const sliderRef = useRef<HTMLDivElement>(null);

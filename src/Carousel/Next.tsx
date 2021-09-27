@@ -1,8 +1,8 @@
 import React, { CSSProperties, useMemo } from 'react';
-import { useShareState } from './useShareState';
+import { useShareState } from './hooks/shareState';
 
-const Previous: React.FC<Props> = ({ id, size, style, children }) => {
-  const [, setSelectedIdx] = useShareState<number>(`selIdx/${id}`, 0);
+const Next: React.FC<Props> = ({ id, size, style, children }) => {
+  const [, setSelectedIdx] = useShareState<number>(`carousel/selIdx/${id}`, 0);
   const containerStyle: CSSProperties = useMemo(
     () => ({
       cursor: 'pointer',
@@ -13,15 +13,15 @@ const Previous: React.FC<Props> = ({ id, size, style, children }) => {
 
   return (
     <span
-      onClick={() => setSelectedIdx((p) => (p - 1 < 0 ? size - 1 : p - 1))}
+      onClick={() => setSelectedIdx((p) => (p + 1 >= size ? 0 : p + 1))}
       style={style ? { ...containerStyle, ...style } : containerStyle}
     >
-      {children}
+      {children && children}
     </span>
   );
 };
 
-export default Previous;
+export default Next;
 
 type Props = {
   id: string;
