@@ -9,6 +9,10 @@ Users can just import the components and use the components anywhere in the
 DOM tree. The components can still communicate with each other without
 rerendering any parent nodes.
 
+## Showcase
+
+https://user-images.githubusercontent.com/33333969/135015535-1962c23e-3fea-4f03-9c83-9a7f2032d8d7.mp4
+
 ## How It Works
 
 The `Viewer` component is all that's needed but you can import optional
