@@ -12,6 +12,8 @@ const Viewer: React.FC<Props> = ({
   slideshow = false,
   duration = 2000,
   showButtons = true,
+  buttonColor = 'white',
+  buttonSize = 50,
 }) => {
   const [selectedIdx, setSelectedIdx] = useShareState<number>(
     `carousel/selIdx/${id}`,
@@ -25,14 +27,13 @@ const Viewer: React.FC<Props> = ({
       duration: duration,
     }
   );
-  const btnHeight = 50;
 
   // Set negative margin to center button more closely at 50% height
   const btnOffset: CSSProperties = useMemo(
     () => ({
-      marginTop: -btnHeight,
+      marginTop: -(buttonSize / 2),
     }),
-    [btnHeight]
+    [buttonSize]
   );
 
   // Select next index; used in automatic slideshow
@@ -80,18 +81,24 @@ const Viewer: React.FC<Props> = ({
             size={images.length}
             style={{ ...styles.button, ...styles.buttonLeft, ...btnOffset }}
           >
-            <span>
-              <Arrow width={50} height={50} direction='left' />
-            </span>
+            <Arrow
+              width={buttonSize}
+              height={buttonSize}
+              color={buttonColor}
+              direction='left'
+            />
           </Previous>
           <Next
             id={id}
             size={images.length}
             style={{ ...styles.button, ...styles.buttonRight, ...btnOffset }}
           >
-            <span>
-              <Arrow width={50} height={50} direction='right' />
-            </span>
+            <Arrow
+              width={buttonSize}
+              height={buttonSize}
+              color={buttonColor}
+              direction='right'
+            />
           </Next>
         </>
       )}
@@ -120,9 +127,6 @@ const styles: Record<string, CSSProperties> = {
     position: 'absolute',
     top: '50%',
     width: 'auto',
-    padding: '16px',
-    color: 'white',
-    transition: '0.6s ease',
     userSelect: 'none',
   },
   buttonLeft: {
@@ -139,4 +143,6 @@ type Props = {
   slideshow?: boolean;
   duration?: number;
   showButtons?: boolean;
+  buttonColor?: string;
+  buttonSize?: number;
 };

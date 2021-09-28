@@ -43,7 +43,15 @@ const App: React.FC<Props> = () => {
           thumbnailHeight={150}
         />
       </div>
-      <div style={{ width: 480, margin: 'auto' }}>
+      <div
+        style={{
+          width: 480,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: 'auto',
+        }}
+      >
         <Previous
           id='1'
           size={images.length}
