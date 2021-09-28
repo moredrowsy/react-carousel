@@ -78,6 +78,8 @@ slideshow is on or off.
 
 ### useAutomate
 
+`src/Carousel/hooks/useAutomate.ts`
+
 `useAutomate` is a hook to access and control the carousel slideshow automation.
 It requires a parameter of string `id` corresponding to carousel `Viewer`.
 It returns a `state` and `setState`.
@@ -89,12 +91,14 @@ automation.
 
 ### useIndex
 
+`src/Carousel/hooks/useIndex.ts`
+
 `useIndex` is a hook to access and control the carousel selected index.
 It requires a parameter of string `id` corresponding to carousel `Viewer`.
 It returns a `state` and `setState`.
 The`state` is a number for the selected image index in the `Viewer`.
-The`setState` set a selected index for the `Viewer` and `Slider` componenet.
-If the index is out of bounds, it will wrap it to the correct boundary.
+The`setState` set a selected index for the `Viewer` and `Slider` component.
+Index boundary is not checked when using `setState`.
 
 `useIndex` can be used to create custom buttons to control the selected image
 in the carousel `Viewer`, ie next or previous buttons.
@@ -106,7 +110,7 @@ with each other in any position of the react's virtual DOM.
 
 ### useShareState Hook
 
-`src/Carousel/hooks/useShareState/useShareState.tsx`
+`src/Carousel/hooks/useShareState/useShareState.ts`
 
 Carousel components can internally share state via a custom hook called
 `useShareState`. The hook `useShareState` setup a map of cache that is seperate
@@ -130,13 +134,13 @@ the root application with a `Provider` from Redux or `RecoilRoot` from `recoil`.
 
 ### Optional internal useShareState Hooks
 
-`src/Carousel/hooks/useShareState/useSelectShareState.tsx`
+`src/Carousel/hooks/useShareState/useSelectShareState.ts`
 
 `useSelectShareState` can be used select a `state` by `id` without
 initialization. If `state` has not yet been initialized by `useShareState`,
 then it returns `null`.
 
-`src/Carousel/hooks/useShareState/useSetShareState.tsx`
+`src/Carousel/hooks/useShareState/useSetShareState.ts`
 
 `useSetShareState` returns a `setState` function to set `state` without
 initialization.
