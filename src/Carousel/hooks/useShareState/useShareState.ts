@@ -5,13 +5,11 @@ import { SetState } from './types';
 
 export default function useShareState<T>(
   key: string,
-  initialState: T extends any ? T | (() => T) : never
+  initialState: T | (() => T)
 ): [T, SetState<T>] {
-  if (!(key in shareState)) {
-    const initState =
-      typeof initialState === 'function' ? initialState() : initialState;
-    shareState[key] = initState;
-  }
+  if (!(key in shareState))
+    shareState[key] =
+      initialState instanceof Function ? initialState() : initialState;
 
   if (!(key in shareEE)) {
     shareEE[key] = new EventEmitter();
