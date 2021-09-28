@@ -70,9 +70,39 @@ a plain component or a custom component with the prop `active` passed into it.
 The `active` prop has value `true` or `false` to indicate if the automatic
 slideshow is on or off.
 
-## useShareState Hook
+## Carousel Hooks
 
-`src/Carousel/hooks/useShareState.tsx`
+### useAutomate
+
+`useAutomate` is a hook to access and control the carousel slideshow automation.
+It requires a parameter of string `id` corresponding to carousel `Viewer`.
+It returns a `state` and `setState`.
+The`state` is a boolean to indicate if the slideshow automation is on/off.
+The`setState` allows control to turn on/off the automate slideshow.
+
+`useAutomate` can be used to create custom buttons to control the slideshow
+automation.
+
+### useIndex
+
+`useIndex` is a hook to access and control the carousel selected index.
+It requires a parameter of string `id` corresponding to carousel `Viewer`.
+It returns a `state` and `setState`.
+The`state` is a number for the selected image index in the `Viewer`.
+The`setState` set a selected index for the `Viewer` and `Slider` componenet.
+If the index is out of bounds, it will wrap it to the correct boundary.
+
+`useIndex` can be used to create custom buttons to control the selected image
+in the carousel `Viewer`, ie next or previous buttons.
+
+## Internal Hooks
+
+The following section describes how the Carousel components can communicate
+with each other in any position of the react's virtual DOM.
+
+### useShareState Hook
+
+`src/Carousel/hooks/useShareState/useShareState.tsx`
 
 Carousel components can internally share state via a custom hook called
 `useShareState`. The hook `useShareState` setup a map of cache that is seperate
@@ -94,15 +124,15 @@ is also the same, where you can directly pass in a new `state` or a `function`.
 This is similar with `redux` and `recoil` but without the need for encapsulating
 the root application with a `Provider` from Redux or `RecoilRoot` from `recoil`.
 
-### Optional hooks
+### Optional internal useShareState Hooks
 
-`src/Carousel/hooks/useSelectShareState.tsx`
+`src/Carousel/hooks/useShareState/useSelectShareState.tsx`
 
 `useSelectShareState` can be used select a `state` by `id` without
 initialization. If `state` has not yet been initialized by `useShareState`,
 then it returns `null`.
 
-`src/Carousel/hooks/useSetShareState.tsx`
+`src/Carousel/hooks/useShareState/useSetShareState.tsx`
 
 `useSetShareState` returns a `setState` function to set `state` without
 initialization.

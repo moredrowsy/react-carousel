@@ -1,5 +1,5 @@
 import React, { CSSProperties, useEffect, useMemo, useRef } from 'react';
-import { useShareState } from './hooks/shareState';
+import { useIndex } from './hooks';
 
 const Slider: React.FC<Props> = ({
   id,
@@ -7,10 +7,7 @@ const Slider: React.FC<Props> = ({
   thumbnailWidth,
   thumbnailHeight,
 }) => {
-  const [selectedIdx, setSelectedIdx] = useShareState<number>(
-    `carousel/selIdx/${id}`,
-    0
-  );
+  const [selectedIdx, setSelectedIdx] = useIndex(id);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   const thumbStyles: CSSProperties = useMemo(

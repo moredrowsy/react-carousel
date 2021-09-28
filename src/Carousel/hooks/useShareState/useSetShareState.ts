@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 import EventEmitter from 'events';
-import { shareState, shareEE } from './shareState';
+import { maxListeners, shareState, shareEE } from './shareState';
+import { SetState } from './types';
 
 export default function useSetShareState<T>(key: string): SetState<T> {
   if (!(key in shareEE)) {
     shareEE[key] = new EventEmitter();
+    shareEE[key].setMaxListeners(maxListeners);
   }
 
   const [, forceUpdate] = useState<boolean>(false);
 
   const setState: SetState<T> = (input) => {
     if (key in shareState) {
-      const state =
-        typeof input === 'function' ? input(shareState[key]) : input;
+      const state = input instanceof Function ? input(shareState[key]) : input;
 
       if (state !== shareState[key]) {
         shareState[key] = state;
@@ -32,7 +33,3 @@ export default function useSetShareState<T>(key: string): SetState<T> {
 
   return setState;
 }
-
-type SetState<T> = (
-  input: T extends any ? T | ((input: T) => T) : never
-) => void;

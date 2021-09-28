@@ -1,8 +1,8 @@
 import React, { CSSProperties, useMemo } from 'react';
-import { useShareState } from './hooks/shareState';
+import { useIndex } from './hooks';
 
 const Next: React.FC<Props> = ({ id, size, style, children }) => {
-  const [, setSelectedIdx] = useShareState<number>(`carousel/selIdx/${id}`, 0);
+  const [, setSelectedIdx] = useIndex(id);
   const containerStyle: CSSProperties = useMemo(
     () => ({
       cursor: 'pointer',

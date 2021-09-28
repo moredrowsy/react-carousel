@@ -1,5 +1,5 @@
 import React, { CSSProperties, useCallback, useEffect, useMemo } from 'react';
-import { useShareState } from './hooks/shareState';
+import { useShareState } from './hooks/useShareState';
 
 import { AutoSlide } from './types';
 import Arrow from './Arrow';

@@ -1,6 +1,9 @@
 import React from 'react';
+import { useAutomate } from './Carousel';
 
-const AutomateButton: React.FC<Props> = ({ active }) => {
+const AutomateButton: React.FC<Props> = ({ id }) => {
+  const [automate, setAutomate] = useAutomate(id);
+
   return (
     <>
       <input
@@ -8,10 +11,10 @@ const AutomateButton: React.FC<Props> = ({ active }) => {
         id='automate'
         name='automate'
         value='Bike'
-        checked={active === 'true'}
-        onChange={() => {}}
+        checked={automate ? true : false}
+        onChange={() => setAutomate((p) => !p)}
       />
-      <label htmlFor='automate'>Automate</label>
+      <span onClick={() => setAutomate((p) => !p)}>Custom Automate Button</span>
     </>
   );
 };
@@ -19,5 +22,5 @@ const AutomateButton: React.FC<Props> = ({ active }) => {
 export default AutomateButton;
 
 type Props = {
-  active?: 'true' | 'false';
+  id: string;
 };

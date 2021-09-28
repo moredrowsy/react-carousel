@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import EventEmitter from 'events';
-import { shareState, shareEE } from './shareState';
+import { maxListeners, shareState, shareEE } from './shareState';
 
 export default function useSelectShareState<T>(key: string): T | null {
   if (!(key in shareEE)) {
     shareEE[key] = new EventEmitter();
+    shareEE[key].setMaxListeners(maxListeners);
   }
 
   const [, forceUpdate] = useState<boolean>(false);

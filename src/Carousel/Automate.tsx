@@ -1,5 +1,5 @@
 import React, { CSSProperties, useMemo } from 'react';
-import { useSelectShareState, useSetShareState } from './hooks/shareState';
+import { useSelectShareState, useSetShareState } from './hooks/useShareState';
 import { AutoSlide } from './types';
 
 const Automate: React.FC<Props> = ({ id, style, children }) => {

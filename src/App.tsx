@@ -26,8 +26,11 @@ const App: React.FC<Props> = () => {
         A React Carousel Example
       </div>
       <div style={{ textAlign: 'center', margin: 15 }}>
+        <AutomateButton id='1' />
+      </div>
+      <div style={{ textAlign: 'center', margin: 15 }}>
         <Automate id='1'>
-          <AutomateButton />
+          <button>Inline Automate Button</button>
         </Automate>
       </div>
       <div style={{ width: 480, height: 480, margin: 'auto' }}>
