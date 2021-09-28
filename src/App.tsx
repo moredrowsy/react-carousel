@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Automate, Next, Previous, Slider, Viewer } from './Carousel';
-import AutomateButton from './AutomateButton';
+import { Next, Previous, Slider, Viewer } from './Carousel';
+import AutoSlideShowBtn from './components/AutoSlideshowBtn';
+import DurationInput from './components/DurationInput';
 
 // Mock data
 import { carouselImages } from './data';
@@ -26,12 +27,10 @@ const App: React.FC<Props> = () => {
         A React Carousel Example
       </div>
       <div style={{ textAlign: 'center', margin: 15 }}>
-        <AutomateButton id='1' />
+        <AutoSlideShowBtn id='1' />
       </div>
       <div style={{ textAlign: 'center', margin: 15 }}>
-        <Automate id='1'>
-          <button>Inline Automate Button</button>
-        </Automate>
+        <DurationInput id='1' />
       </div>
       <div style={{ width: 480, height: 480, margin: 'auto' }}>
         <Viewer id='1' images={images} slideshow={true} />

@@ -6,16 +6,11 @@ import Arrow from './Arrow';
 import Next from './Next';
 import Previous from './Previous';
 
-const initAutoSlide: AutoSlide = {
-  active: false,
-  timerId: null,
-  interval: 3000,
-};
-
 const Viewer: React.FC<Props> = ({
   id,
   images,
   slideshow = false,
+  duration = 2000,
   showButtons = true,
 }) => {
   const [selectedIdx, setSelectedIdx] = useShareState<number>(
@@ -24,7 +19,11 @@ const Viewer: React.FC<Props> = ({
   );
   const [autoSlide, setAutoSlide] = useShareState<AutoSlide>(
     `carousel/autoSlide/${id}`,
-    { ...initAutoSlide, active: slideshow }
+    {
+      active: slideshow,
+      timerId: null,
+      duration: duration,
+    }
   );
   const btnHeight = 50;
 
@@ -50,7 +49,7 @@ const Viewer: React.FC<Props> = ({
 
       const timerId = setInterval(() => {
         nextSlide();
-      }, 3000);
+      }, autoSlide.duration);
       setAutoSlide((p) => ({ ...p, timerId }));
     }
 
@@ -138,5 +137,6 @@ type Props = {
   id: string;
   images: string[];
   slideshow?: boolean;
+  duration?: number;
   showButtons?: boolean;
 };

@@ -41,7 +41,9 @@ The `Viewer` component shows the main image. It also has a onhover previous and
 next arrow buttons to navigate the carousel.
 
 It requires props of `images` (list of image urls) and a unique string `id` for
-this carousel.
+this carousel. Optional props are `slideshow` (`true` or `false` to turn on/off)
+the automate slideshow and `duration` to set the time duration in milliseconds
+between each transition.
 
 ### Slider
 
@@ -83,11 +85,24 @@ slideshow is on or off.
 `useAutomate` is a hook to access and control the carousel slideshow automation.
 It requires a parameter of string `id` corresponding to carousel `Viewer`.
 It returns a `state` and `setState`.
-The`state` is a boolean to indicate if the slideshow automation is on/off.
-The`setState` allows control to turn on/off the automate slideshow.
+The `state` is a boolean to indicate if the slideshow automation is on/off.
+The `setState` allows control to turn on/off the automate slideshow.
 
-`useAutomate` can be used to create custom buttons to control the slideshow
+`useAutomate` can be used to create a custom button to control the slideshow
 automation.
+
+### useDuration
+
+`src/Carousel/hooks/useDuration.ts`
+
+`useDuration` is a hook to access and control the carousel slideshow duration.
+It requires a parameter of string `id` corresponding to carousel `Viewer`.
+It returns a `state` and `setState`.
+The `state` is a number corresponding to the slideshow duration.
+The `setState` changes the slideshow duration between image transition.
+
+`useDuration` can be used to create a custom button to control the slideshow
+duration.
 
 ### useIndex
 
@@ -134,11 +149,15 @@ the root application with a `Provider` from Redux or `RecoilRoot` from `recoil`.
 
 ### Optional internal useShareState Hooks
 
+#### useSelectShareState Hook
+
 `src/Carousel/hooks/useShareState/useSelectShareState.ts`
 
 `useSelectShareState` can be used select a `state` by `id` without
 initialization. If `state` has not yet been initialized by `useShareState`,
 then it returns `null`.
+
+#### useSetShareState Hook
 
 `src/Carousel/hooks/useShareState/useSetShareState.ts`
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { useAutomate } from './Carousel';
+import { useAutomate } from '../Carousel';
 
-const AutomateButton: React.FC<Props> = ({ id }) => {
+const AutoSlideshowBtn: React.FC<Props> = ({ id }) => {
   const [automate, setAutomate] = useAutomate(id);
 
   return (
@@ -10,16 +10,16 @@ const AutomateButton: React.FC<Props> = ({ id }) => {
         type='checkbox'
         id='automate'
         name='automate'
-        value='Bike'
+        value='automate'
         checked={automate ? true : false}
         onChange={() => setAutomate((p) => !p)}
       />
-      <span onClick={() => setAutomate((p) => !p)}>Custom Automate Button</span>
+      <span onClick={() => setAutomate((p) => !p)}>Automate Slideshow</span>
     </>
   );
 };
 
-export default AutomateButton;
+export default AutoSlideshowBtn;
 
 type Props = {
   id: string;
