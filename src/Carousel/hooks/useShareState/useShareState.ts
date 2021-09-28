@@ -7,13 +7,15 @@ export default function useShareState<T>(
   key: string,
   initialState: T | (() => T)
 ): [T, SetState<T>] {
-  if (!(key in shareState))
-    shareState[key] =
-      initialState instanceof Function ? initialState() : initialState;
-
   if (!(key in shareEE)) {
     shareEE[key] = new EventEmitter();
     shareEE[key].setMaxListeners(maxListeners);
+  }
+
+  if (!(key in shareState)) {
+    shareState[key] =
+      initialState instanceof Function ? initialState() : initialState;
+    shareEE[key].emit('init');
   }
 
   const [, forceUpdate] = useState<boolean>(false);

@@ -1,12 +1,9 @@
-import {
-  useSelectShareState,
-  useSetShareState,
-  SetState,
-} from './useShareState';
+import { useShareStateOrNull, SetState } from './useShareState';
 
 export default function useIndex(id: string): [number, SetState<number>] {
-  const index = useSelectShareState<number>(`carousel/selIdx/${id}`);
-  const setIndex = useSetShareState<number>(`carousel/selIdx/${id}`);
+  const [index, setIndex] = useShareStateOrNull<number>(
+    `carousel/selIdx/${id}`
+  );
 
   const setState: SetState<number> = (input) =>
     setIndex((p) => (input instanceof Function ? input(p) : input));

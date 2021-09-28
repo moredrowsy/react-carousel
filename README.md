@@ -123,7 +123,7 @@ in the carousel `Viewer`, ie next or previous buttons.
 The following section describes how the Carousel components can communicate
 with each other in any position of the react's virtual DOM.
 
-### useShareState Hook
+### useShareState
 
 `src/Carousel/hooks/useShareState/useShareState.ts`
 
@@ -147,17 +147,18 @@ is also the same, where you can directly pass in a new `state` or a `function`.
 This is similar with `redux` and `recoil` but without the need for encapsulating
 the root application with a `Provider` from Redux or `RecoilRoot` from `recoil`.
 
-### Optional internal useShareState Hooks
+### Optional internal useShareState hooks
 
-#### useSelectShareState Hook
+#### useSelectShareState
 
 `src/Carousel/hooks/useShareState/useSelectShareState.ts`
 
 `useSelectShareState` can be used select a `state` by `id` without
 initialization. If `state` has not yet been initialized by `useShareState`,
-then it returns `null`.
+then it returns `null`. This hook will update whenever `useShareState` has
+initialized value at a later time.
 
-#### useSetShareState Hook
+#### useSetShareState
 
 `src/Carousel/hooks/useShareState/useSetShareState.ts`
 
@@ -165,6 +166,12 @@ then it returns `null`.
 initialization.
 If `state` has not yet been initialized by `useShareState`,
 then calling `setState` does nothing.
+
+#### useShareStateOrNull
+
+`src/Carousel/hooks/useShareState/useShareStateOrNull.ts`
+
+`useShareStateOrNull` combines both `useSelectShareState` and `useSetShareState`
 
 ## Install
 

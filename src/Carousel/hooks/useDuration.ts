@@ -1,13 +1,10 @@
-import {
-  useSelectShareState,
-  useSetShareState,
-  SetState,
-} from './useShareState';
+import { useShareStateOrNull, SetState } from './useShareState';
 import { AutoSlide } from '../types';
 
 export default function useDuration(id: string): [number, SetState<number>] {
-  const autoSlide = useSelectShareState<AutoSlide>(`carousel/autoSlide/${id}`);
-  const setAutoSlide = useSetShareState<AutoSlide>(`carousel/autoSlide/${id}`);
+  const [autoSlide, setAutoSlide] = useShareStateOrNull<AutoSlide>(
+    `carousel/autoSlide/${id}`
+  );
 
   const setState: SetState<number> = (input) =>
     setAutoSlide((p) => ({
